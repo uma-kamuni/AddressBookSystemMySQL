@@ -1,0 +1,325 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| payroll_service    |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.02 sec)
+            
+
+      //UC1
+
+mysql> create database AddressBookService;
+Query OK, 1 row affected (0.33 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| addressbookservice |
+| information_schema |
+| mysql              |
+| payroll_service    |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> use AddressBookService
+Database changed
+mysql> use AddressBookService;
+Database changed
+mysql> select database();
++--------------------+
+| database()         |
++--------------------+
+| addressbookservice |
++--------------------+
+1 row in set (0.00 sec)
+
+
+         //UC2
+
+mysql> create table ADDRESSBOOK
+    -> (
+    -> ID INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    -> FIRST_NAME VARCHAR(20) NOT NULL,
+    -> LAST_NAME VARCHAR(15) NOT NULL,
+    -> ADDRESS VARCHAR(25),
+    -> CITY VARCHAR(20) NOT NULL,
+    -> STATE VARCHAR(20) NOT NULL,
+    -> ZIPCODE INT(6) NOT NULL,
+    -> PHONE_NUMBER VARCHAR(10) NOT NULL,
+    -> EMAIL_ID  NVARCHAR(320), #nvarchar stores any length of code
+    -> PRIMARY KEY (ID)
+    -> );
+Query OK, 0 rows affected, 2 warnings (3.64 sec)
+
+mysql> DESCRIBE ADDRESSBOOK;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| ID           | int unsigned | NO   | PRI | NULL    | auto_increment |
+| FIRST_NAME   | varchar(20)  | NO   |     | NULL    |                |
+| LAST_NAME    | varchar(15)  | NO   |     | NULL    |                |
+| ADDRESS      | varchar(25)  | YES  |     | NULL    |                |
+| CITY         | varchar(20)  | NO   |     | NULL    |                |
+| STATE        | varchar(20)  | NO   |     | NULL    |                |
+| ZIPCODE      | int          | NO   |     | NULL    |                |
+| PHONE_NUMBER | varchar(10)  | NO   |     | NULL    |                |
+| EMAIL_ID     | varchar(320) | YES  |     | NULL    |                |
++--------------+--------------+------+-----+---------+----------------+
+9 rows in set (0.11 sec)
+
+           //UC3
+
+mysql> INSERT INTO ADDRESSBOOK (FIRST_NAME ,LAST_NAME ,ADDRESS ,CITY ,STATE ,ZIPCODE , PHONE_NUMBER ,EMAIL_ID) VALUES
+    -> ('uma','kamuni','bhavanipet','solapur','maharashtra','413005','9122546426','uma@gmail.com');
+Query OK, 1 row affected (0.32 sec)
+
+mysql> SELECT * FROM ADDRESSBOOK
+    -> SELECT * FROM ADDRESSBOOK;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT * FROM ADDRESSBOOK' at line 2
+mysql> SELECT * FROM ADDRESSBOOK;
++----+------------+-----------+------------+---------+-------------+---------+--------------+---------------+
+| ID | FIRST_NAME | LAST_NAME | ADDRESS    | CITY    | STATE       | ZIPCODE | PHONE_NUMBER | EMAIL_ID      |
++----+------------+-----------+------------+---------+-------------+---------+--------------+---------------+
+|  1 | uma        | kamuni    | bhavanipet | solapur | maharashtra |  413005 | 9122546426   | uma@gmail.com |
++----+------------+-----------+------------+---------+-------------+---------+--------------+---------------+
+1 row in set (0.04 sec)
+
+mysql> INSERT INTO ADDRESSBOOK (FIRST_NAME ,LAST_NAME ,ADDRESS ,CITY,STATE,ZIPCODE ,PHONE_NUMBER,EMAIL_ID) VALUES ('Dhanunjaya','kummari','bramhanapalli','puttaparthi','andhra','515134','8978041840','kdjay517@gmail.com')
+    -> ;
+Query OK, 1 row affected (0.09 sec)
+
+mysql> SELECT * FROM ADDRESSBOOK;
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+--------------------+
+| ID | FIRST_NAME | LAST_NAME | ADDRESS       | CITY        | STATE       | ZIPCODE | PHONE_NUMBER | EMAIL_ID           |
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+--------------------+
+|  1 | uma        | kamuni    | bhavanipet    | solapur     | maharashtra |  413005 | 9122546426   | uma@gmail.com      |
+|  2 | Dhanunjaya | kummari   | bramhanapalli | puttaparthi | andhra      |  515134 | 8978041840   | kdjay517@gmail.com |
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+--------------------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO ADDRESSBOOK (FIRST_NAME ,LAST_NAME ,ADDRESS ,CITY,STATE,ZIPCODE ,PHONE_NUMBER,EMAIL_ID) VALUES ('bhuvan','chandra','bathamcharla','putta','andhra','515004','9997251840','bhuvanchandra@gmail.com')
+    -> ;
+Query OK, 1 row affected (0.09 sec)
+
+mysql> INSERT INTO ADDRESSBOOK (FIRST_NAME ,LAST_NAME ,ADDRESS ,CITY,STATE,ZIPCODE ,PHONE_NUMBER,EMAIL_ID) VALUES ('Dhanunjaya','kummari','akkalkotroad','solapur','maharashtra','515009','8978881840','cherry@gmail.com');
+Query OK, 1 row affected (0.14 sec)
+
+mysql> SELECT * FROM ADDRESSBOOK;
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+-------------------------+
+| ID | FIRST_NAME | LAST_NAME | ADDRESS       | CITY        | STATE       | ZIPCODE | PHONE_NUMBER | EMAIL_ID                |
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+-------------------------+
+|  1 | uma        | kamuni    | bhavanipet    | solapur     | maharashtra |  413005 | 9122546426   | uma@gmail.com           |
+|  2 | Dhanunjaya | kummari   | bramhanapalli | puttaparthi | andhra      |  515134 | 8978041840   | kdjay517@gmail.com      |
+|  3 | bhuvan     | chandra   | bathamcharla  | putta       | andhra      |  515004 | 9997251840   | bhuvanchandra@gmail.com |
+|  4 | Dhanunjaya | kummari   | akkalkotroad  | solapur     | maharashtra |  515009 | 8978881840   | cherry@gmail.com        |
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+-------------------------+
+4 rows in set (0.00 sec)
+
+                                       //UC4
+
+mysql>  update addressbook set city = 'kurnool' , first_name = 'bhuvan' where id = '4';
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM ADDRESSBOOK;
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+-------------------------+
+| ID | FIRST_NAME | LAST_NAME | ADDRESS       | CITY        | STATE       | ZIPCODE | PHONE_NUMBER | EMAIL_ID                |
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+-------------------------+
+|  1 | uma        | kamuni    | bhavanipet    | solapur     | maharashtra |  413005 | 9122546426   | uma@gmail.com           |
+|  2 | Dhanunjaya | kummari   | bramhanapalli | puttaparthi | andhra      |  515134 | 8978041840   | kdjay517@gmail.com      |
+|  3 | bhuvan     | chandra   | bathamcharla  | putta       | andhra      |  515004 | 9997251840   | bhuvanchandra@gmail.com |
+|  4 | bhuvan     | kummari   | akkalkotroad  | kurnool     | maharashtra |  515009 | 8978881840   | cherry@gmail.com        |
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+-------------------------+
+4 rows in set (0.00 sec)
+
+mysql> update addressbook set city = 'kurnool' , first_name = 'bhuvan' , last_name = 'chandra' , address = 'bathamcharla' , zipcode = 500201 where id = '4';
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM ADDRESSBOOK;
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+-------------------------+
+| ID | FIRST_NAME | LAST_NAME | ADDRESS       | CITY        | STATE       | ZIPCODE | PHONE_NUMBER | EMAIL_ID                |
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+-------------------------+
+|  1 | uma        | kamuni    | bhavanipet    | solapur     | maharashtra |  413005 | 9122546426   | uma@gmail.com           |
+|  2 | Dhanunjaya | kummari   | bramhanapalli | puttaparthi | andhra      |  515134 | 8978041840   | kdjay517@gmail.com      |
+|  3 | bhuvan     | chandra   | bathamcharla  | putta       | andhra      |  515004 | 9997251840   | bhuvanchandra@gmail.com |
+|  4 | bhuvan     | chandra   | bathamcharla  | kurnool     | maharashtra |  500201 | 8978881840   | cherry@gmail.com        |
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+-------------------------+
+4 rows in set (0.00 sec)
+
+
+       //UC5
+
+mysql> SELECT * FROM ADDRESSBOOK;
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+-------------------------+
+| ID | FIRST_NAME | LAST_NAME | ADDRESS       | CITY        | STATE       | ZIPCODE | PHONE_NUMBER | EMAIL_ID                |
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+-------------------------+
+|  1 | uma        | kamuni    | bhavanipet    | solapur     | maharashtra |  413005 | 9122546426   | uma@gmail.com           |
+|  2 | Dhanunjaya | kummari   | bramhanapalli | puttaparthi | andhra      |  515134 | 8978041840   | kdjay517@gmail.com      |
+|  3 | bhuvan     | chandra   | bathamcharla  | putta       | andhra      |  515004 | 9997251840   | bhuvanchandra@gmail.com |
+|  4 | bhuvan     | chandra   | bathamcharla  | kurnool     | maharashtra |  500201 | 8978881840   | cherry@gmail.com        |
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+-------------------------+
+4 rows in set (0.00 sec)
+
+mysql> delete from addressbook where id ='3';
+Query OK, 1 row affected (0.14 sec)
+
+mysql> SELECT * FROM ADDRESSBOOK;
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+--------------------+
+| ID | FIRST_NAME | LAST_NAME | ADDRESS       | CITY        | STATE       | ZIPCODE | PHONE_NUMBER | EMAIL_ID           |
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+--------------------+
+|  1 | uma        | kamuni    | bhavanipet    | solapur     | maharashtra |  413005 | 9122546426   | uma@gmail.com      |
+|  2 | Dhanunjaya | kummari   | bramhanapalli | puttaparthi | andhra      |  515134 | 8978041840   | kdjay517@gmail.com |
+|  4 | bhuvan     | chandra   | bathamcharla  | kurnool     | maharashtra |  500201 | 8978881840   | cherry@gmail.com   |
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+--------------------+
+3 rows in set (0.03 sec)
+
+               //UC6
+mysql> SELECT * FROM ADDRESSBOOK;
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+--------------------+
+| ID | FIRST_NAME | LAST_NAME | ADDRESS       | CITY        | STATE       | ZIPCODE | PHONE_NUMBER | EMAIL_ID           |
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+--------------------+
+|  1 | uma        | kamuni    | bhavanipet    | solapur     | maharashtra |  413005 | 9122546426   | uma@gmail.com      |
+|  2 | Dhanunjaya | kummari   | bramhanapalli | puttaparthi | andhra      |  515134 | 8978041840   | kdjay517@gmail.com |
+|  4 | bhuvan     | chandra   | bathamcharla  | kurnool     | maharashtra |  500201 | 8978881840   | cherry@gmail.com   |
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+--------------------+
+3 rows in set (0.03 sec)
+
+mysql> SELECT* FROM ADDRESSBOOK WHERE CITY = 'PUTTAPARTHI';
++----+------------+-----------+---------------+-------------+--------+---------+--------------+--------------------+
+| ID | FIRST_NAME | LAST_NAME | ADDRESS       | CITY        | STATE  | ZIPCODE | PHONE_NUMBER | EMAIL_ID           |
++----+------------+-----------+---------------+-------------+--------+---------+--------------+--------------------+
+|  2 | Dhanunjaya | kummari   | bramhanapalli | puttaparthi | andhra |  515134 | 8978041840   | kdjay517@gmail.com |
++----+------------+-----------+---------------+-------------+--------+---------+--------------+--------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM ADDRESSBOOK;
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+--------------------+
+| ID | FIRST_NAME | LAST_NAME | ADDRESS       | CITY        | STATE       | ZIPCODE | PHONE_NUMBER | EMAIL_ID           |
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+--------------------+
+|  1 | uma        | kamuni    | bhavanipet    | solapur     | maharashtra |  413005 | 9122546426   | uma@gmail.com      |
+|  2 | Dhanunjaya | kummari   | bramhanapalli | puttaparthi | andhra      |  515134 | 8978041840   | kdjay517@gmail.com |
+|  4 | bhuvan     | chandra   | bathamcharla  | kurnool     | maharashtra |  500201 | 8978881840   | cherry@gmail.com   |
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+--------------------+
+3 rows in set (0.00 sec)
+
+
+                  //UC7
+mysql> SELECT * FROM ADDRESSBOOK;
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+--------------------+
+| ID | FIRST_NAME | LAST_NAME | ADDRESS       | CITY        | STATE       | ZIPCODE | PHONE_NUMBER | EMAIL_ID           |
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+--------------------+
+|  1 | uma        | kamuni    | bhavanipet    | solapur     | maharashtra |  413005 | 9122546426   | uma@gmail.com      |
+|  2 | Dhanunjaya | kummari   | bramhanapalli | puttaparthi | andhra      |  515134 | 8978041840   | kdjay517@gmail.com |
+|  4 | bhuvan     | chandra   | bathamcharla  | kurnool     | maharashtra |  500201 | 8978881840   | cherry@gmail.com   |
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+--------------------+
+3 rows in set (0.00 sec)
+
+mysql> select city, count(*) from addressbook where city = 'solapur';
++---------+----------+
+| city    | count(*) |
++---------+----------+
+| solapur |        1 |
++---------+----------+
+1 row in set (0.00 sec)
+
+mysql> select state, count(*) from addressbook where state = 'maharashtra';
++-------------+----------+
+| state       | count(*) |
++-------------+----------+
+| maharashtra |        2 |
++-------------+----------+
+1 row in set (0.00 sec)
+
+
+              //UC8
+mysql> select * from addressbook where state = 'maharashtra' order by first_name;
++----+------------+-----------+--------------+---------+-------------+---------+--------------+------------------+
+| ID | FIRST_NAME | LAST_NAME | ADDRESS      | CITY    | STATE       | ZIPCODE | PHONE_NUMBER | EMAIL_ID         |
++----+------------+-----------+--------------+---------+-------------+---------+--------------+------------------+
+|  4 | bhuvan     | chandra   | bathamcharla | kurnool | maharashtra |  500201 | 8978881840   | cherry@gmail.com |
+|  1 | uma        | kamuni    | bhavanipet   | solapur | maharashtra |  413005 | 9122546426   | uma@gmail.com    |
++----+------------+-----------+--------------+---------+-------------+---------+--------------+------------------+
+2 rows in set (0.00 sec)
+
+
+           //UC9
+
+mysql> INSERT INTO ADDRESSBOOK (FIRST_NAME ,LAST_NAME ,ADDRESS ,CITY,STATE,ZIPCODE ,PHONE_NUMBER,EMAIL_ID) VALUES ('praveen','kumar','kummarpalli','proddatur','telangana','515024','8978025840','praveen@gmail.com');
+Query OK, 1 row affected (0.13 sec)
+
+mysql> SELECT * FROM ADDRESSBOOK;
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+--------------------+
+| ID | FIRST_NAME | LAST_NAME | ADDRESS       | CITY        | STATE       | ZIPCODE | PHONE_NUMBER | EMAIL_ID           |
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+--------------------+
+|  1 | uma        | kamuni    | bhavanipet    | solapur     | maharashtra |  413005 | 9122546426   | uma@gmail.com      |
+|  2 | Dhanunjaya | kummari   | bramhanapalli | puttaparthi | andhra      |  515134 | 8978041840   | kdjay517@gmail.com |
+|  4 | bhuvan     | chandra   | bathamcharla  | kurnool     | maharashtra |  500201 | 8978881840   | cherry@gmail.com   |
+|  5 | praveen    | kumar     | kummarpalli   | proddatur   | telangana   |  515024 | 8978025840   | praveen@gmail.com  |
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+--------------------+
+4 rows in set (0.02 sec)
+
+mysql> alter table addressbook add type varchar(30) after email_id;
+Query OK, 0 rows affected (2.39 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM ADDRESSBOOK;
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+--------------------+------+
+| ID | FIRST_NAME | LAST_NAME | ADDRESS       | CITY        | STATE       | ZIPCODE | PHONE_NUMBER | EMAIL_ID           | type |
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+--------------------+------+
+|  1 | uma        | kamuni    | bhavanipet    | solapur     | maharashtra |  413005 | 9122546426   | uma@gmail.com      | NULL |
+|  2 | Dhanunjaya | kummari   | bramhanapalli | puttaparthi | andhra      |  515134 | 8978041840   | kdjay517@gmail.com | NULL |
+|  4 | bhuvan     | chandra   | bathamcharla  | kurnool     | maharashtra |  500201 | 8978881840   | cherry@gmail.com   | NULL |
+|  5 | praveen    | kumar     | kummarpalli   | proddatur   | telangana   |  515024 | 8978025840   | praveen@gmail.com  | NULL |
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+--------------------+------+
+4 rows in set (0.04 sec)
+
+mysql> update addressbook set type = 'friend' where first_name = "bhuvan";
+Query OK, 1 row affected (0.17 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update addressbook set type = 'professional' where first_name = "praveen";
+Query OK, 1 row affected (0.11 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update addressbook set type = 'family' where first_name = "uma";
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update addressbook set type = 'family' where first_name = "Dhanunjaya";
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM ADDRESSBOOK;
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+--------------------+--------------+
+| ID | FIRST_NAME | LAST_NAME | ADDRESS       | CITY        | STATE       | ZIPCODE | PHONE_NUMBER | EMAIL_ID           | type         |
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+--------------------+--------------+
+|  1 | uma        | kamuni    | bhavanipet    | solapur     | maharashtra |  413005 | 9122546426   | uma@gmail.com      | family       |
+|  2 | Dhanunjaya | kummari   | bramhanapalli | puttaparthi | andhra      |  515134 | 8978041840   | kdjay517@gmail.com | family       |
+|  4 | bhuvan     | chandra   | bathamcharla  | kurnool     | maharashtra |  500201 | 8978881840   | cherry@gmail.com   | friend       |
+|  5 | praveen    | kumar     | kummarpalli   | proddatur   | telangana   |  515024 | 8978025840   | praveen@gmail.com  | professional |
++----+------------+-----------+---------------+-------------+-------------+---------+--------------+--------------------+--------------+
+4 rows in set (0.00 sec)
+
+
+                            //UC10
+
+mysql> select type, count(*) from addressbook where type = 'family';
++--------+----------+
+| type   | count(*) |
++--------+----------+
+| family |        2 |
++--------+----------+
+1 row in set (0.00 sec)
+
+                         
+                           //UC11
+
